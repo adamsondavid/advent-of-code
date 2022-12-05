@@ -3,21 +3,16 @@ import Level from "../utils/level";
 export default class extends Level {
   public run(): void {
     const crates: string[][] = [];
-    let line;
-    while ((line = this.input.readLine())) {
-      if (line.startsWith(" 1")) break;
-      const lineArr = line
-        .replaceAll("    ", " ")
-        .replaceAll("     ", " ")
-        .replaceAll("        ", " ")
-        .replaceAll("         ", " ")
-        .split(" ");
-      for (let i = 0; i < lineArr.length; i++) {
-        if (lineArr[i] === "") continue;
-        if (!crates[i]) crates[i] = [];
-        crates[i].unshift(lineArr[i].replace(/\[|]/g, ""));
+
+    for (let line = this.input.readLine()!; !line.startsWith(" 1"); line = this.input.readLine()!) {
+      let cratesIndex = 0;
+      for (let i = 1; i < line.length; i += 4) {
+        if (!crates[cratesIndex]) crates[cratesIndex] = [];
+        if (line[i] !== " ") crates[cratesIndex].unshift(line[i]);
+        cratesIndex++;
       }
     }
+
     this.input.readLine();
 
     for (const line of this.input.readLines()) {
