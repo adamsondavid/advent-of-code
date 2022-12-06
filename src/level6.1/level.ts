@@ -2,6 +2,18 @@ import Level from "../utils/level";
 
 export default class extends Level {
   public run(): void {
-    throw new Error("Method not implemented.");
+    const input = this.input.readLine()!;
+
+    const buffer = [];
+    for (let i = 0; i < input.length; i++) {
+      if (buffer.length === 4) buffer.shift();
+      buffer.push(input[i]);
+      if (buffer.length === 4) {
+        if ([...new Set(buffer)].length === 4) {
+          this.output.writeLine(i + 1);
+          return;
+        }
+      }
+    }
   }
 }
