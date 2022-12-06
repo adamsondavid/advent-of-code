@@ -2,12 +2,10 @@ import StringStream from "./string-stream";
 
 export default abstract class Level {
   protected readonly input;
-  protected readonly output;
 
-  public constructor(input: StringStream, output: StringStream) {
+  public constructor(input: StringStream) {
     this.input = input;
-    this.output = output;
   }
 
-  public abstract run(): void;
+  public abstract run(): string;
 }

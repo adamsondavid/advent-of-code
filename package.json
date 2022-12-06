@@ -1,8 +1,11 @@
 {
-  "name": "advent-of-code-2022",
+  "name": "advent-of-code",
   "scripts": {
     "test": "jest --coverage",
     "lint": "eslint --ext .json,.js,.ts --fix ."
+  },
+  "dependencies": {
+    "axios": "^1.2.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.2.2",
@@ -14,6 +17,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "jest": "^29.2.2",
+    "jest-jasmine2": "^29.3.1",
     "prettier": "^2.7.1",
     "typescript": "^4.8.4"
   }
