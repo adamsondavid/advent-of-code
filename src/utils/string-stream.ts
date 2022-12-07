@@ -10,8 +10,12 @@ export default class StringStream {
     return this.lines.shift();
   }
 
-  public readLines(numLines?: number) {
-    return this.lines.splice(0, numLines);
+  public peekLine() {
+    return this.lines[0];
+  }
+
+  public readLines() {
+    return this.lines.splice(0);
   }
 
   public writeLine(lines: string) {
