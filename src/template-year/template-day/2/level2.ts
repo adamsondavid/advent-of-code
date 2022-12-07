@@ -1,7 +1,7 @@
 import Level from "../../../utils/level";
 
 export default class extends Level {
-  public run(): string {
+  public run() {
     throw new Error("level not implemented");
   }
 }

@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
 import StringStream from "../../../utils/string-stream";
-import Level from "./level1";
+import Level from "./level2";
 import { readFile } from "fs/promises";
 import { testName } from "../../../utils/test-utils";
 
-describe("level1", () => {
+describe("level2", () => {
   let level: Level;
 
   beforeEach(async () => {
@@ -14,11 +14,11 @@ describe("level1", () => {
 
   test("../example.txt", async () => {
     const output = level.run();
-    expect(output).toBe(95437);
+    expect(output).toBe("TODO");
   });
 
   test("../prod.txt", async () => {
     const output = level.run();
-    expect(output).toBe(1206825);
+    expect(output).toBe("TODO");
   });
 });

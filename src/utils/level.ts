@@ -7,5 +7,5 @@ export default abstract class Level {
     this.input = input;
   }
 
-  public abstract run(): string;
+  public abstract run(): any;
 }

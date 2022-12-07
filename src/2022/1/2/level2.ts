@@ -1,11 +1,11 @@
-import Level from "../utils/level";
+import Level from "../../../utils/level";
 
 type Elf = {
   calories: number;
 };
 
 export default class extends Level {
-  public run(): void {
+  public run() {
     const elves: Elf[] = [];
 
     let currentElf: Elf = { calories: 0 };
@@ -17,7 +17,7 @@ export default class extends Level {
     }
     elves.push(currentElf);
 
-    const maxCalories = Math.max(...elves.map((elf) => elf.calories));
-    this.output.writeLine(maxCalories);
+    elves.sort((a, b) => b.calories - a.calories);
+    return elves[0].calories + elves[1].calories + elves[2].calories;
   }
 }

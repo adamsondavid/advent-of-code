@@ -47,7 +47,7 @@ function allDirectories(root: Directory, dirs: Directory[] = []) {
 }
 
 export default class extends Level {
-  public run(): string {
+  public run() {
     const rootDir = new Directory("/");
     let currentDir = rootDir;
 
@@ -67,7 +67,6 @@ export default class extends Level {
     return allDirectories(rootDir)
       .map((dir) => dir.size)
       .filter((size) => size <= 100000)
-      .reduce((a, b) => a + b, 0)
-      .toString();
+      .reduce((a, b) => a + b, 0);
   }
 }
