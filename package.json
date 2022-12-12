@@ -5,12 +5,14 @@
     "lint": "eslint --ext .json,.js,.ts --fix ."
   },
   "dependencies": {
-    "axios": "^1.2.1"
+    "axios": "^1.2.1",
+    "node-dijkstra": "^2.5.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.2.2",
     "@swc/core": "^1.3.11",
     "@swc/jest": "^0.2.23",
+    "@types/node-dijkstra": "^2.5.3",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "eslint": "^8.26.0",
