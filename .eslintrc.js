@@ -10,5 +10,6 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "prettier/prettier": ["error", { printWidth: 120, endOfLine: "lf" }],
+    "no-constant-condition": "off",
   },
 };
