@@ -6,8 +6,9 @@ interface Vec2 {
   readonly y: number;
 }
 
-interface Sensor extends Vec2 {
-  readonly beacon: Vec2;
+interface Sensor {
+  readonly position: Vec2;
+  readonly radius: number;
 }
 
 function distance(a: Vec2, b: Vec2) {
@@ -23,40 +24,64 @@ export default class extends Level {
   }
 
   public run() {
-    const sensors: Sensor[] = [];
-    const grid: string[][] = [];
-
-    const regex = /Sensor at x=(?<sX>.*), y=(?<sY>.*): closest beacon is at x=(?<bX>.*), y=(?<bY>.*)/;
-    for (const line of this.input.readLines()) {
+    const sensors: Sensor[] = this.input.readLines().map((line) => {
+      const regex = /Sensor at x=(?<sX>.*), y=(?<sY>.*): closest beacon is at x=(?<bX>.*), y=(?<bY>.*)/;
       const { groups } = line.match(regex)!;
-      const beacon: Vec2 = { x: parseInt(groups!.bX), y: parseInt(groups!.bY) };
-      const sensor: Sensor = { x: parseInt(groups!.sX), y: parseInt(groups!.sY), beacon: beacon };
 
-      sensors.push(sensor);
-      if (!grid[sensor.y]) grid[sensor.y] = [];
-      grid[sensor.y][sensor.x] = "S";
+      const position = { x: parseInt(groups!.sX), y: parseInt(groups!.sY) };
+      const beacon = { x: parseInt(groups!.bX), y: parseInt(groups!.bY) };
 
-      if (!grid[beacon.y]) grid[beacon.y] = [];
-      grid[beacon.y][beacon.x] = "B";
-    }
+      return { position, radius: distance(position, beacon) };
+    });
 
-    for (const [i, sensor] of sensors.entries()) {
-      console.log(`processing sensor ${i} of ${sensors.length - 1}`);
-      const beacon = sensor.beacon;
-      const d = distance(sensor, beacon);
-      for (let y = Math.max(0, sensor.y - d); y <= Math.min(sensor.y + d, this.maxXY); y++) {
-        if (!grid[y]) grid[y] = [];
-        for (let x = Math.max(0, sensor.x - d); x <= Math.min(sensor.x + d, this.maxXY); x++) {
-          if (distance(sensor, { x, y }) <= d) {
-            if (!grid[y][x]) grid[y][x] = "#";
-          }
-        }
+    for (const sensor of sensors) {
+      const positions = [];
+
+      const n: Vec2 = { x: sensor.position.x, y: sensor.position.y - sensor.radius - 1 };
+      const e: Vec2 = { x: sensor.position.x + sensor.radius + 1, y: sensor.position.y };
+      const s: Vec2 = { x: sensor.position.x, y: sensor.position.y + sensor.radius + 1 };
+      const w: Vec2 = { x: sensor.position.x - sensor.radius - 1, y: sensor.position.y };
+
+      let x;
+      let y;
+
+      x = n.x;
+      y = n.y;
+      while (x < e.x && y < e.y) {
+        if (x >= 0 && x <= this.maxXY && y >= 0 && y <= this.maxXY) positions.push({ x, y });
+        x++;
+        y++;
       }
-    }
 
-    for (let y = 0; y <= this.maxXY; y++) {
-      for (let x = 0; x <= this.maxXY; x++) {
-        if (!grid[y][x]) return x * 4000000 + y;
+      x = e.x;
+      y = e.y;
+      while (x > s.x && y < s.y) {
+        if (x >= 0 && x <= this.maxXY && y >= 0 && y <= this.maxXY) positions.push({ x, y });
+        x--;
+        y++;
+      }
+
+      x = s.x;
+      y = s.y;
+      while (x > w.x && y > w.y) {
+        if (x >= 0 && x <= this.maxXY && y >= 0 && y <= this.maxXY) positions.push({ x, y });
+        x--;
+        y--;
+      }
+
+      x = w.x;
+      y = w.y;
+      while (x < n.x && y > n.y) {
+        if (x >= 0 && x <= this.maxXY && y >= 0 && y <= this.maxXY) positions.push({ x, y });
+        x++;
+        y--;
+      }
+
+      for (const position of positions) {
+        const unreachable = sensors
+          .map((sensor) => distance(sensor.position, position) <= sensor.radius)
+          .every((reachable) => !reachable);
+        if (unreachable) return position.x * 4000000 + position.y;
       }
     }
   }

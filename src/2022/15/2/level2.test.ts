@@ -18,6 +18,6 @@ describe("level2", () => {
     const level = new Level(input, 4000000);
 
     const output = level.run();
-    expect(output).toBe("TODO");
+    expect(output).toBe(13360899249595);
   });
 });
