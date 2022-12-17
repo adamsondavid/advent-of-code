@@ -118,7 +118,6 @@ export default class extends Level {
         rock.position.y--;
       }
     }
-
     return height(grid) - heightBeforeSkip! + heightAfterSkip!;
   }
 }
