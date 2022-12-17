@@ -105,10 +105,10 @@ export default class extends Level {
 
             if (f !== "." && r !== ".") {
               for (let h2 = 0; h2 < rock.collider.length; h2++) {
+                if (!grid[h2 + rock.position.y])
+                  grid[h2 + rock.position.y] = ["|", ".", ".", ".", ".", ".", ".", ".", "|"];
                 for (let w2 = 0; w2 < rock.collider[h2].length; w2++) {
-                  if (!grid[h2 + rock.position.y])
-                    grid[h2 + rock.position.y] = ["|", ".", ".", ".", ".", ".", ".", ".", "|"];
-                  grid[h2 + rock.position.y][w2 + rock.position.x + 1] = rock.collider[h2][w2];
+                  if (rock.collider[h2][w2] === "#") grid[h2 + rock.position.y][w2 + rock.position.x + 1] = "#";
                 }
               }
               break rock;

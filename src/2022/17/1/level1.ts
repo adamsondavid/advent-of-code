@@ -42,7 +42,7 @@ export default class extends Level {
     const grid = [];
     grid[-1] = ["+", "-", "-", "-", "-", "-", "-", "-", "+"];
 
-    for (let i = 0; i < 2023; i++) {
+    for (let i = 0; i < 2022; i++) {
       const rock: Rock = { position: { x: 2, y: height(grid) + 3 }, collider: colliders[i % colliders.length] };
       rock: while (true) {
         const xMove = input.shift()!;
@@ -69,10 +69,10 @@ export default class extends Level {
 
             if (f !== "." && r !== ".") {
               for (let h2 = 0; h2 < rock.collider.length; h2++) {
+                if (!grid[h2 + rock.position.y])
+                  grid[h2 + rock.position.y] = ["|", ".", ".", ".", ".", ".", ".", ".", "|"];
                 for (let w2 = 0; w2 < rock.collider[h2].length; w2++) {
-                  if (!grid[h2 + rock.position.y])
-                    grid[h2 + rock.position.y] = ["|", ".", ".", ".", ".", ".", ".", ".", "|"];
-                  grid[h2 + rock.position.y][w2 + rock.position.x + 1] = rock.collider[h2][w2];
+                  if (rock.collider[h2][w2] === "#") grid[h2 + rock.position.y][w2 + rock.position.x + 1] = "#";
                 }
               }
               break rock;
