@@ -34,9 +34,9 @@ export default class extends Level {
     const player: Vec2 = { x: field[0].indexOf("."), y: 0 };
 
     let min = 0;
-    const queue = [[player]];
+    let players = [player];
 
-    while (queue.length) {
+    while (true) {
       min++;
 
       for (const blizzard of blizzards) {
@@ -50,18 +50,18 @@ export default class extends Level {
         }
       }
 
-      const newPlayers: Vec2[] = [];
-      for (const player of queue.shift()!) {
+      const newPlayers = new Set<string>();
+      for (const player of players) {
         for (const direction of [{ x: 0, y: 0 }, UP, DOWN, LEFT, RIGHT]) {
           const newPlayer = { x: player.x + direction.x, y: player.y + direction.y };
           if ((field[newPlayer.y]?.[newPlayer.x] ?? "#") === "#") continue;
           if (blizzards.some((blizzard) => blizzard.position.x === newPlayer.x && blizzard.position.y === newPlayer.y))
             continue;
           if (newPlayer.x === exit.x && newPlayer.y === exit.y) return min;
-          newPlayers.push(newPlayer);
+          newPlayers.add(JSON.stringify(newPlayer));
         }
       }
-      queue.push(newPlayers);
+      players = Array.from(newPlayers.values()).map((player) => JSON.parse(player));
     }
   }
 }

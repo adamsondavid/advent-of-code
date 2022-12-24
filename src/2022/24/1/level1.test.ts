@@ -19,6 +19,6 @@ describe("level1", () => {
 
   test("../prod.txt", async () => {
     const output = level.run();
-    expect(output).toBe("TODO");
+    expect(output).toBe(343);
   });
 });
