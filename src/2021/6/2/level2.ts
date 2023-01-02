@@ -1,7 +1,5 @@
 import Level from "../../../utils/level";
 
-type Lanternfish = { timer: number };
-
 export default class extends Level {
   public run() {
     const lanternfishes: number[] = this.input
