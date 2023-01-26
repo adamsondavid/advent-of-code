@@ -14,11 +14,11 @@ describe("level2", () => {
 
   test("../example.txt", async () => {
     const output = level.run();
-    expect(output).toBe("TODO");
+    expect(output).toBe(288957);
   });
 
   test("../prod.txt", async () => {
     const output = level.run();
-    expect(output).toBe("TODO");
+    expect(output).toBe(3646451424);
   });
 });
