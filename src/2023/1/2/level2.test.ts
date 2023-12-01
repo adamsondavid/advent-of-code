@@ -12,13 +12,13 @@ describe("level2", () => {
     level = new Level(input);
   });
 
-  test("../example.txt", async () => {
+  test("../example2.txt", async () => {
     const output = level.run();
-    expect(output).toBe("TODO");
+    expect(output).toBe(281);
   });
 
   test("../prod.txt", async () => {
     const output = level.run();
-    expect(output).toBe("TODO");
+    expect(output).toBe(53868);
   });
 });
