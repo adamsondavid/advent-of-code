@@ -26,11 +26,11 @@ function simulate(
   robots: Map<Resource, number>,
   resources: Map<Resource, number>,
   notAllowedToBuy: Resource[] = [],
-  result = { maxGeodes: 0 }
+  result = { maxGeodes: 0 },
 ) {
   const newResources = new Map<Resource, number>(resources);
   Array.from(robots.entries()).forEach(([resource, amount]) =>
-    newResources.set(resource, (newResources.get(resource) ?? 0) + amount)
+    newResources.set(resource, (newResources.get(resource) ?? 0) + amount),
   );
 
   const geodes = newResources.get("GEODE") ?? 0;

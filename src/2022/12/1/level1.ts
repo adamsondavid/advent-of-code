@@ -20,7 +20,7 @@ export default class extends Level {
           destination = nodeName(x, y, height);
         }
         return height;
-      })
+      }),
     );
 
     const graph = new Graph();

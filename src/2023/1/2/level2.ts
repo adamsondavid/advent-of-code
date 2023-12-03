@@ -16,7 +16,7 @@ function findFirstDigit(line: string, options = { reversed: false }) {
   if (options.reversed) {
     line = line.split("").reverse().join("");
     wordDigitMap = Object.fromEntries(
-      Object.entries(wordDigitMap).map(([key, value]) => [key.split("").reverse().join(""), value])
+      Object.entries(wordDigitMap).map(([key, value]) => [key.split("").reverse().join(""), value]),
     );
   }
 

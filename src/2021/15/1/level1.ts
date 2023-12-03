@@ -20,7 +20,7 @@ export default class extends Level {
           directions
             .map((direction) => ({ x: x + direction.x, y: y + direction.y }))
             .filter((direction) => map[direction.y]?.[direction.x])
-            .map((direction) => [JSON.stringify(direction), map[direction.y][direction.x]])
+            .map((direction) => [JSON.stringify(direction), map[direction.y][direction.x]]),
         );
         graph.set(JSON.stringify({ x, y }), connections);
       }

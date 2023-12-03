@@ -19,7 +19,7 @@ function dfs(
   elephant: { valve: Valve; timeLeft: number },
   pressure = 0,
   openedValves: Valve[] = [],
-  visitedValves: Valve[] = []
+  visitedValves: Valve[] = [],
 ) {
   if (!openedValves.includes(me.valve) && me.valve.flowrate > 0 && me.timeLeft >= 1) {
     me.timeLeft--;
@@ -48,7 +48,7 @@ function dfs(
           { valve: elephantNeighbour.valve, timeLeft: elephant.timeLeft - elephantNeighbour.distance },
           pressure,
           openedValves,
-          [...visitedValves, myNeighbour.valve, elephantNeighbour.valve]
+          [...visitedValves, myNeighbour.valve, elephantNeighbour.valve],
         );
       }
     }
@@ -80,8 +80,8 @@ export default class extends Level {
     valves.forEach((valve) =>
       graph.addNode(
         valve.name,
-        Object.fromEntries(valve.neighbours.map((neighbour) => [neighbour.valve.name, neighbour.distance]))
-      )
+        Object.fromEntries(valve.neighbours.map((neighbour) => [neighbour.valve.name, neighbour.distance])),
+      ),
     );
 
     for (const valve of valves) {

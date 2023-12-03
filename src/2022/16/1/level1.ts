@@ -54,8 +54,8 @@ export default class extends Level {
     valves.forEach((valve) =>
       graph.addNode(
         valve.name,
-        Object.fromEntries(valve.neighbours.map((neighbour) => [neighbour.valve.name, neighbour.distance]))
-      )
+        Object.fromEntries(valve.neighbours.map((neighbour) => [neighbour.valve.name, neighbour.distance])),
+      ),
     );
 
     for (const valve of valves) {

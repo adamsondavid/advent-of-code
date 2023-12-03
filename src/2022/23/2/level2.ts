@@ -52,15 +52,15 @@ export default class extends Level {
           .flatMap((directions) => directions)
           .some((direction) =>
             elves.some(
-              (otherElf) => otherElf !== elf && otherElf.x == elf.x + direction.x && otherElf.y === elf.y + direction.y
-            )
+              (otherElf) => otherElf !== elf && otherElf.x == elf.x + direction.x && otherElf.y === elf.y + direction.y,
+            ),
           );
         if (!hasNeighbours) continue;
         for (const directions of directionGroups) {
           const blocked = directions.some((direction) =>
             elves.some(
-              (otherElf) => otherElf !== elf && otherElf.x == elf.x + direction.x && otherElf.y === elf.y + direction.y
-            )
+              (otherElf) => otherElf !== elf && otherElf.x == elf.x + direction.x && otherElf.y === elf.y + direction.y,
+            ),
           );
           if (!blocked) {
             moveProposals.push({ elf, destination: { x: elf.x + directions[0].x, y: elf.y + directions[0].y } });
@@ -75,7 +75,7 @@ export default class extends Level {
           (otherMove) =>
             otherMove !== move &&
             otherMove.destination.x === move.destination.x &&
-            otherMove.destination.y === move.destination.y
+            otherMove.destination.y === move.destination.y,
         );
         if (unique) {
           move.elf.x = move.destination.x;

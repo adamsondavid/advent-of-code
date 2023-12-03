@@ -1,24 +1,21 @@
-import { beforeEach, describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
 import StringStream from "../../../utils/string-stream";
-import Level from "./level2";
+import { solve } from "./level2";
 import { readFile } from "fs/promises";
 import { testName } from "../../../utils/test-utils";
 
 describe("level2", () => {
-  let level: Level;
-
-  beforeEach(async () => {
-    const input = new StringStream(await readFile(`${__dirname}/${testName()}`, "utf8"));
-    level = new Level(input);
-  });
+  const readInput = async () => new StringStream(await readFile(`${__dirname}/${testName()}`, "utf8"));
 
   test("../example.txt", async () => {
-    const output = level.run();
+    const input = await readInput();
+    const output = solve(input);
     expect(output).toBe("TODO");
   });
 
   test("../prod.txt", async () => {
-    const output = level.run();
+    const input = await readInput();
+    const output = solve(input);
     expect(output).toBe("TODO");
   });
 });

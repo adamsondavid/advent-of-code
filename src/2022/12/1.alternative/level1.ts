@@ -37,7 +37,7 @@ export default class extends Level {
           ]
             .map((coordinate) => JSON.stringify(coordinate))
             .filter((coordinate) => vertecies.get(coordinate)! <= height + 1)
-            .map((coordinate) => [...path, coordinate])
+            .map((coordinate) => [...path, coordinate]),
         );
       }
     }

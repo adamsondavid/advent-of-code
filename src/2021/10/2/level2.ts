@@ -28,9 +28,9 @@ export default class extends Level {
       .map((error) =>
         error.expected
           .map((expected) =>
-            expected === ")" ? 1 : expected === "]" ? 2 : expected === "}" ? 3 : expected === ">" ? 4 : NaN
+            expected === ")" ? 1 : expected === "]" ? 2 : expected === "}" ? 3 : expected === ">" ? 4 : NaN,
           )
-          .reduce((a, b) => a * 5 + b, 0)
+          .reduce((a, b) => a * 5 + b, 0),
       )
       .sort((a, b) => a - b);
     return scores[Math.floor(scores.length / 2)];

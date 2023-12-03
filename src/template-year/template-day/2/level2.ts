@@ -1,7 +1,3 @@
-import Level from "../../../utils/level";
+import StringStream from "../../../utils/string-stream";
 
-export default class extends Level {
-  public run() {
-    throw new Error("level not implemented");
-  }
-}
+export function solve(input: StringStream) {}

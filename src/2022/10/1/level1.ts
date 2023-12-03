@@ -8,7 +8,7 @@ export default class extends Level {
     });
 
     const signals = [20, 60, 100, 140, 180, 220].map(
-      (cycle) => instructions.slice(0, cycle - 1).reduce((a, b) => a + b, 1) * cycle
+      (cycle) => instructions.slice(0, cycle - 1).reduce((a, b) => a + b, 1) * cycle,
     );
 
     return signals.reduce((a, b) => a + b, 0);

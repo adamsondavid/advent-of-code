@@ -16,8 +16,8 @@ export default class extends Level {
         row
           .split(" ")
           .filter((cell) => cell)
-          .map((cell, x) => ({ x, y, checked: false, value: parseInt(cell) }))
-      )
+          .map((cell, x) => ({ x, y, checked: false, value: parseInt(cell) })),
+      ),
     );
 
     for (const number of numbers) {

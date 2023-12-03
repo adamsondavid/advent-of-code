@@ -49,7 +49,7 @@ export default class extends Level {
       const rucksackGroup = new RucksackGroup(
         createItems(lines[i]),
         createItems(lines[i + 1]),
-        createItems(lines[i + 2])
+        createItems(lines[i + 2]),
       );
       value += rucksackGroup.priorityItem.value;
     }

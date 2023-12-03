@@ -14,8 +14,8 @@ export default class extends Level {
               rgb[color as "red" | "green" | "blue"] += parseInt(n);
               return rgb;
             },
-            { red: 0, green: 0, blue: 0 }
-          )
+            { red: 0, green: 0, blue: 0 },
+          ),
         ),
       };
     });

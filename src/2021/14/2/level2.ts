@@ -5,7 +5,7 @@ export default class extends Level {
     const word = this.input.readLine()!.split("");
     this.input.readLine();
     const rules = new Map<string, string>(
-      this.input.readLines().map((line) => [line.split(" -> ")[0], line.split(" -> ")[1]])
+      this.input.readLines().map((line) => [line.split(" -> ")[0], line.split(" -> ")[1]]),
     );
 
     let map = word
@@ -29,7 +29,7 @@ export default class extends Level {
         .reduce(
           (occurrences, [part, occurrence]) =>
             occurrences.set(part.split("")[1], (occurrences.get(part.split("")[1]) ?? 0) + occurrence),
-          new Map<string, number>()
+          new Map<string, number>(),
         )
         .values(),
     ].sort((a, b) => b - a);
