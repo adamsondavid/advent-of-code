@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test } from "vitest";
 import StringStream from "../../../utils/string-stream";
 import { solve } from "./level2";
 import { readFile } from "fs/promises";
