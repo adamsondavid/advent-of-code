@@ -5,7 +5,8 @@
     "test": "vitest"
   },
   "dependencies": {
-    "node-dijkstra": "^2.5.0"
+    "node-dijkstra": "^2.5.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node-dijkstra": "^2.5.3",
