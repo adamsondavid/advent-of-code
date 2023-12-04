@@ -1,0 +1,12 @@
+import StringStream from "../../../utils/string-stream";
+
+export function solve(input: StringStream) {
+  const nums = input.readLines().map((line) => parseInt(line));
+  for (const a of nums) {
+    for (const b of nums) {
+      for (const c of nums) {
+        if (a + b + c === 2020) return a * b * c;
+      }
+    }
+  }
+}
