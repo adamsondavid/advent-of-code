@@ -46,7 +46,7 @@ export function solve(input: StringStream) {
         mappings.map((mapping) => {
           const [dst, src, range] = mapping.split(" ");
           return new MapperForSingleRange(
-            { from: parseInt(src), to: parseInt(src) + parseInt(range) },
+            { from: parseInt(src), to: parseInt(src) + parseInt(range) - 1 },
             parseInt(dst) - parseInt(src),
           );
         }),
