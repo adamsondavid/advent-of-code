@@ -7,15 +7,15 @@ import { testName } from "../../../utils/test-utils";
 describe("level2", () => {
   const readInput = async () => new StringStream(await readFile(`${__dirname}/${testName()}`, "utf8"));
 
-  test("../example.txt", async () => {
+  test("example.txt", async () => {
     const input = await readInput();
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(4);
   });
 
   test("../prod.txt", async () => {
     const input = await readInput();
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(367);
   });
 });
