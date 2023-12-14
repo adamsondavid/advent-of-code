@@ -1,5 +1,4 @@
 import StringStream from "../../../utils/string-stream";
-import hash from "object-hash";
 
 type Vec2 = { x: number; y: number };
 
@@ -29,7 +28,7 @@ export function solve(input: StringStream) {
       .map((rock) => rock.rock),
   );
 
-  const rocksByIteration = new Map<string, number>();
+  const iterationByMap = new Map<string, number>();
 
   const iterations = 1000000000;
   for (let i = 0; i < iterations; i++) {
@@ -48,13 +47,13 @@ export function solve(input: StringStream) {
         }
       } while (moving);
     }
-    const currentRocks = hash(rocks[0], { unorderedArrays: true });
-    const lastTimeSeen = rocksByIteration.get(currentRocks);
+    const currentMap = JSON.stringify(map);
+    const lastTimeSeen = iterationByMap.get(currentMap);
     if (lastTimeSeen) {
       const cycleSize = i - lastTimeSeen;
       const cycles = Math.floor((iterations - i) / cycleSize);
       i += cycleSize * cycles;
-    } else rocksByIteration.set(currentRocks, i);
+    } else iterationByMap.set(currentMap, i);
   }
 
   return rocks[0].map((rock) => map.length - rock.y).reduce((sum, rockWeight) => sum + rockWeight);
