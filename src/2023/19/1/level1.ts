@@ -6,19 +6,18 @@ export function solve(input: StringStream) {
   const [rulesString, partsString] = input.readLines().join("\n").split("\n\n");
 
   const rules = Object.fromEntries(
-    rulesString.split("\n").map((line) => [
-      line.split("{")[0],
-      new Function(
-        "part",
-        "const { x, m, a, s } = part; return " +
-          line
-            .split("{")[1]
-            .replaceAll(":", "?")
-            .replaceAll(",", ":")
-            .replaceAll("}", "")
-            .replaceAll(/([a-z]{2,}|[AR])/g, "'$1'"),
-      ) as (part: Part) => string,
-    ]),
+    rulesString.split("\n").map((line) => {
+      const name = line.match(/[a-z]{2,}/)![0];
+      const nextRule = line
+        .replace(/.*\{(.*)}/, "$1")
+        .replaceAll(":", " ? ")
+        .replaceAll(",", " : ")
+        .replaceAll("<", " < ")
+        .replaceAll(">", " > ")
+        .replaceAll(/([a-z]{2,}|[AR])/g, "'$1'");
+      console.log({ name, nextRule });
+      return [name, new Function("part", `const { x, m, a, s } = part; return ${nextRule};`)];
+    }),
   );
 
   const parts = partsString
