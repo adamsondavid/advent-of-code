@@ -25,21 +25,32 @@ class SignalLogger implements SignalObserver {
   onSignal = (signal: Signal, from: Module, to: Module) => console.log(`${from.name} -${signal}-> ${to.name}`);
 }
 
-const nextTick = new Array<Module>();
+class Scheduler {
+  private queue = new Array<Module>();
+  schedule = (module: Module) => this.queue.push(module);
+  dispatch() {
+    while (this.queue.length) this.queue.shift()!.tick();
+  }
+}
+
 abstract class Module {
   readonly inputModules = new Array<Module>();
   readonly outputModules = new Array<Module>();
   private outputBuffer?: Signal;
-  constructor(public readonly name: string, private readonly signalObservers: SignalObserver[]) {}
-  abstract onSignal(signal: Signal, input: Module): void;
+  constructor(
+    public readonly name: string,
+    private readonly signalObservers: SignalObserver[],
+    protected readonly scheduler: Scheduler,
+  ) {}
+  abstract onSignal(signal: Signal, from: Module): void;
   protected sendSignalToOutputModules(signal: Signal) {
+    this.scheduler.schedule(this);
     this.outputBuffer = signal;
-    nextTick.push(this);
   }
   tick() {
     this.outputModules.forEach((outputModule) => {
       if (!this.outputBuffer) throw new Error("no output in buffer to populate!");
-      outputModule.onSignal && outputModule.onSignal(this.outputBuffer!, this);
+      outputModule.onSignal(this.outputBuffer!, this);
       this.signalObservers.forEach((observer) => observer.onSignal(this.outputBuffer!, this, outputModule));
     });
   }
@@ -60,8 +71,8 @@ class FlipFlopModule extends Module {
 
 class ConjunctionModule extends Module {
   private inputMemory = new Map<Module, Signal>();
-  onSignal(signal: Signal, input: Module) {
-    this.inputMemory.set(input, signal);
+  onSignal(signal: Signal, from: Module) {
+    this.inputMemory.set(from, signal);
     if (
       this.inputModules
         .map((inputModule) => this.inputMemory.get(inputModule) ?? "low")
@@ -75,7 +86,7 @@ class ConjunctionModule extends Module {
 class ButtonModule extends BroadcastModule {
   click() {
     this.onSignal();
-    while (nextTick.length) nextTick.shift()!.tick();
+    this.scheduler.dispatch();
   }
 }
 
@@ -83,14 +94,8 @@ class OutputModule extends Module {
   onSignal() {}
 }
 
-function createModule(type: string, name: string, signalObservers: SignalObserver[]) {
-  if (!type && name === "broadcaster") return new BroadcastModule(name, signalObservers);
-  if (type === "%") return new FlipFlopModule(name, signalObservers);
-  if (type === "&") return new ConjunctionModule(name, signalObservers);
-  throw new Error(`cannot create module ${name}. unknown module type: ${type}.`);
-}
-
 export function solve(input: StringStream) {
+  const scheduler = new Scheduler();
   const signalCounter = new SignalCounter();
   const signalLogger = new SignalLogger();
   const signalObservers = [signalCounter, signalLogger];
@@ -98,18 +103,24 @@ export function solve(input: StringStream) {
   const modules = Object.fromEntries(
     input.readLines().map((line) => {
       const [, type, name, connections] = line.match(/([%&])?([a-z]+) -> (.*)/)!;
-      return [name, { module: createModule(type, name, signalObservers), connections: connections.split(", ") }];
+      function createModule(type: string, name: string) {
+        if (!type && name === "broadcaster") return new BroadcastModule(name, signalObservers, scheduler);
+        if (type === "%") return new FlipFlopModule(name, signalObservers, scheduler);
+        if (type === "&") return new ConjunctionModule(name, signalObservers, scheduler);
+        throw new Error(`cannot create module ${name}. unknown module type: ${type}.`);
+      }
+      return [name, { module: createModule(type, name), connections: connections.split(", ") }];
     }),
   );
   for (const { module, connections } of Object.values(modules)) {
     for (const connection of connections) {
       let outputModule: Module = modules[connection]?.module;
-      if (!outputModule) outputModule = new OutputModule(connection, signalObservers);
+      if (!outputModule) outputModule = new OutputModule(connection, signalObservers, scheduler);
       module.outputModules.push(outputModule);
       outputModule.inputModules.push(module);
     }
   }
-  const button = new ButtonModule("button", signalObservers);
+  const button = new ButtonModule("button", signalObservers, scheduler);
   button.outputModules.push(modules["broadcaster"].module);
 
   for (let i = 0; i < 1000; i++) button.click();
