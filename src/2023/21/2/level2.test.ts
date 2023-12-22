@@ -10,12 +10,12 @@ describe("level2", () => {
   test("../example.txt", async () => {
     const input = await readInput();
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(3724206447513);
   });
 
   test("../prod.txt", async () => {
     const input = await readInput();
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(614864614526014);
   });
 });
