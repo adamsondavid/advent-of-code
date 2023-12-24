@@ -9,13 +9,13 @@ describe("level1", () => {
 
   test("../example.txt", async () => {
     const input = await readInput();
-    const output = solve(input);
-    expect(output).toBe("TODO");
+    const output = solve(input, { start: 7, end: 27 });
+    expect(output).toBe(2);
   });
 
   test("../prod.txt", async () => {
     const input = await readInput();
-    const output = solve(input);
-    expect(output).toBe("TODO");
+    const output = solve(input, { start: 200000000000000, end: 400000000000000 });
+    expect(output).toBe(16665);
   });
 });
