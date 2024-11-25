@@ -1,20 +1,16 @@
 import { describe, expect, test } from "vitest";
-import StringStream from "../../../utils/string-stream";
 import { solve } from "./level2";
-import { readFile } from "fs/promises";
-import { testName } from "../../../utils/test-utils";
+import { useInput, useProdInput } from "../../../utils/test-utils";
 
 describe("level2", () => {
-  const readInput = async () => new StringStream(await readFile(`${__dirname}/${testName()}`, "utf8"));
-
   test("../example.txt", async () => {
-    const input = await readInput();
+    const input = await useInput(__dirname);
     const output = solve(input);
     expect(output).toBe("TODO");
   });
 
   test("../prod.txt", async () => {
-    const input = await readInput();
+    const input = await useProdInput(__dirname);
     const output = solve(input);
     expect(output).toBe("TODO");
   });

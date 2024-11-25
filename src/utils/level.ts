@@ -1,5 +1,8 @@
 import StringStream from "./string-stream";
 
+/**
+ * @deprecated
+ */
 export default abstract class Level {
   protected readonly input;
 
