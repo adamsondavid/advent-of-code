@@ -1,0 +1,35 @@
+import Level from "../../../utils/level";
+import Graph from "node-dijkstra";
+
+type Vec2 = { readonly x: number; readonly y: number };
+
+const UP: Vec2 = { x: 0, y: -1 };
+const RIGHT: Vec2 = { x: 1, y: 0 };
+const DOWN: Vec2 = { x: 0, y: 1 };
+const LEFT: Vec2 = { x: -1, y: 0 };
+const directions: Vec2[] = [UP, RIGHT, DOWN, LEFT];
+
+export default class extends Level {
+  public run() {
+    const map = this.input.readLines().map((row) => row.split("").map((weight) => parseInt(weight)));
+
+    const graph = new Map<string, Map<string, number>>();
+    for (let y = 0; y < map.length; y++) {
+      for (let x = 0; x < map[0].length; x++) {
+        const connections = new Map<string, number>(
+          directions
+            .map((direction) => ({ x: x + direction.x, y: y + direction.y }))
+            .filter((direction) => map[direction.y]?.[direction.x])
+            .map((direction) => [JSON.stringify(direction), map[direction.y][direction.x]]),
+        );
+        graph.set(JSON.stringify({ x, y }), connections);
+      }
+    }
+
+    const route = new Graph(graph);
+
+    return route.path(JSON.stringify({ x: 0, y: 0 }), JSON.stringify({ x: map[0].length - 1, y: map.length - 1 }), {
+      cost: true,
+    }).cost;
+  }
+}

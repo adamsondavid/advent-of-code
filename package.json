@@ -1,0 +1,22 @@
+{
+  "name": "advent-of-code",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "heap-js": "^2.3.0",
+    "node-dijkstra": "^2.5.0",
+    "object-hash": "^3.0.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node-dijkstra": "^2.5.3",
+    "@types/object-hash": "^3.0.6",
+    "prettier": "^2.7.1",
+    "typescript": "^5.3.2",
+    "undici": "^6.21.0",
+    "vitest": "^0.34.6"
+  }
+}
