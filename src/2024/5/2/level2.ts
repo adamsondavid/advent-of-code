@@ -22,7 +22,7 @@ export function solve(_input: StringStream) {
     return true;
   }
 
-  function sort(graph: Map<string, string[]>) {
+  function sortPage(graph: Map<string, string[]>) {
     const inDegree = new Map();
     const queue = new Array<string>();
 
@@ -42,13 +42,13 @@ export function solve(_input: StringStream) {
       }
     }
 
-    return result.filter((num) => graph.has(num));
+    return result;
   }
 
   let res = 0;
   for (const page of pages) {
     if (!isPageSorted(page)) {
-      const sortedPage = sort(new Map([...pageOrderingRules.entries()].filter(([key]) => page.includes(key))));
+      const sortedPage = sortPage(new Map([...pageOrderingRules.entries()].filter(([key]) => page.includes(key))));
       res += Number(sortedPage[Math.floor(sortedPage.length / 2)]);
     }
   }
