@@ -23,7 +23,7 @@ export function solve(_input: StringStream) {
   }
 
   function sortPage(graph: Map<string, string[]>) {
-    const inDegree = new Map();
+    const inDegree = new Map<string, number>();
     const queue = new Array<string>();
 
     for (const node of graph.keys()) inDegree.set(node, 0);
@@ -37,7 +37,7 @@ export function solve(_input: StringStream) {
       result.push(current);
 
       for (const neighbor of graph.get(current)!.filter((neighbor) => graph.has(neighbor))) {
-        inDegree.set(neighbor, inDegree.get(neighbor) - 1);
+        inDegree.set(neighbor, inDegree.get(neighbor)! - 1);
         if (inDegree.get(neighbor) === 0) queue.push(neighbor);
       }
     }
