@@ -6,12 +6,12 @@ describe("level2", () => {
   test("../example.txt", async () => {
     const input = await useInput(__dirname);
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(6);
   });
 
   test("../prod.txt", async () => {
     const input = await useProdInput(__dirname);
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(1503);
   });
 });
