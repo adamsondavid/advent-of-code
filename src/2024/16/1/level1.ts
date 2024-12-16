@@ -30,25 +30,28 @@ export function solve(input: StringStream) {
   while (queue.length) {
     const current = queue.pop()!;
 
-    if (!current.node) continue;
-    if (map[current.node.y][current.node.x].symbol === "#") continue;
     if (visited.has(current.node)) continue;
     visited.add(current.node);
 
     if (current.node.x === end.x && current.node.y === end.y) return current.dist;
 
-    queue.push({
-      dist: current.dist + 1,
-      // @ts-ignore
-      node: map[current.node.y + current.node.dir.y]?.[current.node.x + current.node.dir.x]?.[current.node.dirName],
-    });
+    const nexts = [
+      {
+        dist: current.dist + 1,
+        node: map[current.node.y + current.node.dir.y]?.[current.node.x + current.node.dir.x]?.[
+          current.node.dirName as "n"
+        ],
+      },
+    ];
     if (current.node.dirName === "w" || current.node.dirName === "e") {
-      queue.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].n });
-      queue.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].s });
+      nexts.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].n });
+      nexts.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].s });
     }
     if (current.node.dirName === "n" || current.node.dirName === "s") {
-      queue.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].e });
-      queue.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].w });
+      nexts.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].e });
+      nexts.push({ dist: current.dist + 1000, node: map[current.node.y][current.node.x].w });
     }
+    for (const next of nexts)
+      if (next.node && map[next.node.y][next.node.x].symbol !== "#" && !visited.has(next.node)) queue.push(next);
   }
 }

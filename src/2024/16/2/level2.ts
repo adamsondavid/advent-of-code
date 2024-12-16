@@ -26,7 +26,10 @@ export function solve(input: StringStream) {
   map[reindeer.y][reindeer.x].e.dist = 0;
 
   const queue = Heap.heapify(
-    map.flat().flatMap((m) => [m.n, m.s, m.e, m.w]),
+    map
+      .flat()
+      .filter((k) => k.symbol !== "#")
+      .flatMap((m) => [m.n, m.s, m.e, m.w]),
     (a, b) => a.dist - b.dist,
   );
 
