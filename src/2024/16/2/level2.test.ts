@@ -12,6 +12,6 @@ describe("level2", () => {
   test("../prod.txt", async () => {
     const input = await useProdInput(__dirname);
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(483);
   });
 });
