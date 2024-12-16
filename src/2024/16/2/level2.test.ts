@@ -6,7 +6,7 @@ describe("level2", () => {
   test("../example.txt", async () => {
     const input = await useInput(__dirname);
     const output = solve(input);
-    expect(output).toBe("TODO");
+    expect(output).toBe(45);
   });
 
   test("../prod.txt", async () => {
