@@ -36,13 +36,13 @@ describe("level1", () => {
 
   test("program 1,7 with b=29", () => {
     const registers = { a: 0, b: 29, c: 0 };
-    const stdout = runProgram([1, 7], registers);
+    runProgram([1, 7], registers);
     expect(registers.b).toBe(26);
   });
 
   test("program 1,7 with b=2024 and c=43690", () => {
     const registers = { a: 0, b: 2024, c: 43690 };
-    const stdout = runProgram([4, 0], registers);
+    runProgram([4, 0], registers);
     expect(registers.b).toBe(44354);
   });
 });
